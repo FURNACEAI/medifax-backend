@@ -57,11 +57,11 @@ functions:
           cors: true
 
   update:
-    handler: todos/update.update
+    handler: employee.update
     events:
       - http:
-          path: todos/{id}
-          method: put
+          path: employee/update/{id}
+          method: post
           cors: true
 
   delete:

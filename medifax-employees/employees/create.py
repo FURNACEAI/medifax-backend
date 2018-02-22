@@ -8,8 +8,8 @@ from passlib.hash import pbkdf2_sha256
 import boto3
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 
-
 def create(event, context):
+
     """ Creates a new Employee record that is capable of logging into the backend/admin panel. """
     data = json.loads(event['body'])
     usrpwd = pbkdf2_sha256.encrypt(data['password'], rounds=200000, salt_size=16)
