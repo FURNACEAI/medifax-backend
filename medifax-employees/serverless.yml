@@ -1,4 +1,4 @@
-service: medifax-employees
+service: medifax-backend-employees
 
 frameworkVersion: ">=1.1.0 <2.0.0"
 
@@ -57,7 +57,7 @@ functions:
           cors: true
 
   update:
-    handler: employee.update
+    handler: employees/update.update
     events:
       - http:
           path: employee/update/{id}
@@ -89,5 +89,5 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: ${self:provider.environment.DYNAMODB_TABLE}
 
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}
