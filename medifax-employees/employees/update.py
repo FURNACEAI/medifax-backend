@@ -1,22 +1,28 @@
 import json
-import time
-import json
 import os
 import time
 from passlib.hash import pbkdf2_sha256
-
 import boto3
+from boto3.dynamodb.conditions import Key, Attr
 
 def update(event, context):
     data = json.loads(event['body'])
-    usrpwd = pbkdf2_sha256.encrypt(data['password'], rounds=200000, salt_size=16)
-    data['password'] = usrpwd
-
-    timestamp = int(time.time() * 1000)
-
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
 
+
+    # Check if a password was passed to the event param. If not, use the existing password.
+    if not data['password']:
+        result = table.scan(
+            FilterExpression=Attr("email").eq(data['email'])
+        )
+        data['password'] = result['Items'][0]['password']
+
+    else:
+        usrpwd = pbkdf2_sha256.encrypt(data['password'], rounds=200000, salt_size=16)
+        data['password'] = usrpwd
+
+    timestamp = int(time.time() * 1000)
 
     attr_names = {
         '#user_role': "user_role",
@@ -71,6 +77,7 @@ def update(event, context):
     return response
 
 if __name__ == '__main__':
+    ## Configure boto for local environment
     boto3.setup_default_session(profile_name='serverless')
     os.environ["DYNAMODB_TABLE"] = 'medifax-backend-employees-dev'
 
@@ -82,11 +89,11 @@ if __name__ == '__main__':
 		"first_name": "123BRYAN-BRY",
 		"last_name": "456RICHARD-RIC",
 		"email": "www555@domain.com",
-		"password": "some_guid",
-		"user_role": "dataentry",
+		"password": "",
+		"user_role": "admin",
 		"active": "yes"
 	})
     }
     # testing_data = json.dumps({'body':})
     data = json.loads(json.dumps(response))
-    update(data, '')
+    print(update(data, ''))

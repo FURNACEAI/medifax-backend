@@ -41,7 +41,7 @@ functions:
           cors: true
 
   list:
-    handler: employee.list
+    handler: employees/list.list
     events:
       - http:
           path: employee/list
@@ -49,7 +49,7 @@ functions:
           cors: true
 
   get:
-    handler: employee.get
+    handler: employees/get.get
     events:
       - http:
           path: employee/{id}
@@ -65,7 +65,7 @@ functions:
           cors: true
 
   delete:
-    handler: employee.delete
+    handler: employees/delete.delete
     events:
       - http:
           path: employee/{id}
@@ -73,7 +73,7 @@ functions:
           cors: true
 
   auth:
-    handler: employee.auth
+    handler: employees/auth.auth
     events:
       - http:
           path: employee/auth
