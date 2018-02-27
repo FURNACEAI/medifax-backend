@@ -1,0 +1,13 @@
+{
+	"pathParameters": {
+		"id": "ebdb8f5e-176c-11e8-9fb0-2a52f8b0aded"
+	},
+	"body": {
+		"first-name": "BRYAN-",
+		"last-name": "RICHARD-",
+		"email": "foobar@domain.com",
+		"password": "some_guid",
+		"user_role": "dataentry",
+		"active": "bar"
+	}
+}
