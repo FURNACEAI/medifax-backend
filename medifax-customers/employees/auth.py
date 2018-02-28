@@ -29,7 +29,7 @@ def auth(event, context):
         if pbkdf2_sha256.verify(data['password'], result['Items'][0]['password']):
             response = {
                 "statusCode": 200,
-                "body": json.dumps({"message": "Success", "messageDesc": "Log successful."})
-            }
+                "body": json.dumps({"message": "Success", "messageDesc": "Log successful.", "id": "%s"})
+            } % result['Items'][0]['id']
 
     return response

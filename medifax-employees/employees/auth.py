@@ -29,7 +29,21 @@ def auth(event, context):
         if pbkdf2_sha256.verify(data['password'], result['Items'][0]['password']):
             response = {
                 "statusCode": 200,
-                "body": json.dumps({"message": "Success", "messageDesc": "Log successful."})
+                "body": json.dumps({"message": "Success", "messageDesc": "Log successful.", "id": result['Items'][0]['id']})
             }
 
+
     return response
+
+if __name__ == '__main__':
+    boto3.setup_default_session(profile_name='serverless')
+    os.environ["DYNAMODB_TABLE"] = 'medifax-backend-employees-dev'
+    response = {
+        "body": json.dumps({
+		"email": "www555@domain.com",
+		"password": "newpwd"
+	})
+    }
+    data = json.loads(json.dumps(response))
+    res = auth(data, '')
+    print(res)
