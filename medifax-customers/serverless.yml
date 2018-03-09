@@ -1,4 +1,4 @@
-service: medifax-backend-employees
+service: medifax-backend-customers
 
 frameworkVersion: ">=1.1.0 <2.0.0"
 
@@ -33,55 +33,55 @@ package:
 
 functions:
   create:
-    handler: employees/create.create
+    handler: customers/create.create
     events:
       - http:
-          path: employee/create
+          path: customers/create
           method: post
           cors: true
 
   list:
-    handler: employees/list.list
+    handler: customers/list.list
     events:
       - http:
-          path: employee/list
+          path: customers/list
           method: get
           cors: true
 
   get:
-    handler: employees/get.get
+    handler: customers/get.get
     events:
       - http:
-          path: employee/{id}
+          path: customers/{id}
           method: get
           cors: true
 
   update:
-    handler: employees/update.update
+    handler: customers/update.update
     events:
       - http:
-          path: employee/update/{id}
+          path: customers/update/{id}
           method: post
           cors: true
 
   delete:
-    handler: employees/delete.delete
+    handler: customers/delete.delete
     events:
       - http:
-          path: employee/{id}
+          path: customers/{id}
           method: delete
           cors: true
 
   auth:
-    handler: employees/auth.auth
+    handler: customers/auth.auth
     events:
       - http:
-          path: employee/auth
+          path: customers/auth
           method: post
           cors: true
 resources:
   Resources:
-    EmployeesDynamoDbTable:
+    CustomersDynamoDbTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
       Properties:

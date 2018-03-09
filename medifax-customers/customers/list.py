@@ -1,12 +1,10 @@
 import json
 import os
-
-from todos import decimalencoder
+import decimalencoder
 import boto3
-dynamodb = boto3.resource('dynamodb')
-
 
 def list(event, context):
+    dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
 
     # fetch all todos from the database
@@ -19,3 +17,9 @@ def list(event, context):
     }
 
     return response
+
+if __name__ == '__main__':
+    ## Configure boto for local environment
+    boto3.setup_default_session(profile_name='serverless')
+    os.environ["DYNAMODB_TABLE"] = 'medifax-backend-customers-dev'
+    print(list('', ''))

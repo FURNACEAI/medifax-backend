@@ -1,6 +1,6 @@
 import os
 import json
-from todos import decimalencoder
+import decimalencoder
 import boto3
 from boto3.dynamodb.conditions import Key
 
