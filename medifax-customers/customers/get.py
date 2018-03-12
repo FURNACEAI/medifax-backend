@@ -1,10 +1,16 @@
+# Local invoke workaround
+if __name__ == '__main__':
+    import sys
+    sys.path.append("/Users/bryan/Work/FURNACE/Projects/Medifax/src/medifax-lambda/medifax-customers")
+
 import os
 import json
-import decimalencoder
+from libs import decimalencoder
 import boto3
 from boto3.dynamodb.conditions import Key
 
 def get(event, context):
+    print(event['pathParameters']['id'])
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
     result = table.get_item(
@@ -12,7 +18,6 @@ def get(event, context):
             'id': event['pathParameters']['id']
         }
     )
-
     response = {
         "statusCode": 200,
         "body": json.dumps(result['Item'],
@@ -20,3 +25,15 @@ def get(event, context):
     }
 
     return response
+
+if __name__ == '__main__':
+    boto3.setup_default_session(profile_name='serverless')
+    os.environ["DYNAMODB_TABLE"] = 'medifax-backend-customers-dev'
+    payload = {
+        "pathParameters": {
+            "id": "dba29cee-23d4-11e8-bd8a-acbc3294be4b"
+        }
+    }
+    data = json.loads(json.dumps(payload))
+    res = get(data, '')
+    print(res)

@@ -1,6 +1,11 @@
+# Local invoke workaround
+if __name__ == '__main__':
+    import sys
+    sys.path.append("/Users/bryan/Work/FURNACE/Projects/Medifax/src/medifax-lambda/medifax-customers")
+
 import json
 import os
-import decimalencoder
+from libs import decimalencoder
 import boto3
 
 def list(event, context):
@@ -9,7 +14,6 @@ def list(event, context):
 
     # fetch all todos from the database
     result = table.scan()
-
     # create a response
     response = {
         "statusCode": 200,

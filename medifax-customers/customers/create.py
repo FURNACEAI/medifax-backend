@@ -63,19 +63,20 @@ def create(event, context):
         }
         return val_exists_response
 
-    usrpwd = pbkdf2_sha256.encrypt(generate_pw(8), rounds=200000, salt_size=16)
+    cleartext_pwd = generate_pw(8)
+    usrpwd = pbkdf2_sha256.encrypt(cleartext_pwd, rounds=200000, salt_size=16)
     uid = str(uuid.uuid1())
     timestamp = int(time.time())
 
     item = {
         'id': uid,
-        'name': {'first': data['first_name'], 'last': data['last_name']},
+        'name': {'first': data['first_name'], 'middle_initial': data['middle_initial'], 'last': data['last_name']},
         'home_address': {
-            'street_address': data['first_name'],
-            'street_address_2': data['last_name'],
-            'city': data['last_name'],
-            'state': data['last_name'],
-            'zipcode': data['last_name']
+            'street_address': data['street_address'],
+            'street_address_2': data['street_address_2'],
+            'city': data['city'],
+            'state': data['state'],
+            'zipcode': data['zipcode']
             },
         'dob': data['dob'],
         'phone': { 'home': data['home_phone'], 'mobile': data['mobile_phone'] },
