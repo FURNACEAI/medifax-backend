@@ -38,7 +38,7 @@ def create(event, context):
     usrpwd = pbkdf2_sha256.encrypt(data['password'], rounds=200000, salt_size=16)
     uid = str(uuid.uuid1())
 
-    timestamp = int(time.time() * 1000)
+    timestamp = int(time.time())
 
     item = {
         'id': uid,

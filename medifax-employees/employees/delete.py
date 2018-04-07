@@ -5,7 +5,7 @@ from boto3.dynamodb.conditions import Key
 
 def delete(event, context):
     """
-    Deletes an Employee from the database
+    Deletes a customer from the database
     """
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])

@@ -103,13 +103,26 @@ def update(event, context):
         '#medication_freq_7': 'medication_freq_7',
         '#medication_freq_8': 'medication_freq_8',
         '#medication_freq_9': 'medication_freq_9',
+        '#ins_planid_dental': 'ins_planid_dental',
+        '#ins_provider_dental': 'ins_provider_dental',
+        '#ins_street_addr_dental': 'ins_street_addr_dental',
+        '#ins_city_dental': 'ins_city_dental',
+        '#ins_state_dental': 'ins_state_dental',
+        '#ins_zipcode_dental': 'ins_zipcode_dental',
+        '#ins_phone_dental': 'ins_phone_dental',
+        '#ins_email_dental': 'ins_email_dental',
+        '#ins_planid_med': 'ins_planid_med',
+        '#ins_provider_med': 'ins_provider_med',
+        '#ins_street_addr_med': 'ins_street_addr_med',
+        '#ins_city_med': 'ins_city_med',
+        '#ins_state_med': 'ins_state_med',
+        '#ins_zipcode_med': 'ins_zipcode_med',
+        '#ins_phone_med': 'ins_phone_med',
+        '#ins_email_med': 'ins_email_med',
         '#dentist_name': 'dentist_name',
         '#dentist_phone': 'dentist_phone',
         '#dentist_email': 'dentist_email',
         '#dental_condition': 'dental_condition',
-
-
-
         '#updated_on': 'updated_on'
     }
 
@@ -183,8 +196,28 @@ def update(event, context):
         ':medication_freq_7': data['medication_freq_7'],
         ':medication_freq_8': data['medication_freq_8'],
         ':medication_freq_9': data['medication_freq_9'],
+        ':ins_planid_dental': data['ins_planid_dental'],
+        ':ins_provider_dental': data['ins_provider_dental'],
+        ':ins_street_addr_dental': data['ins_street_addr_dental'],
+        ':ins_city_dental': data['ins_city_dental'],
+        ':ins_state_dental': data['ins_state_dental'],
+        ':ins_zipcode_dental': data['ins_zipcode_dental'],
+        ':ins_phone_dental': data['ins_phone_dental'],
+        ':ins_email_dental': data['ins_email_dental'],
+        ':ins_planid_med': data['ins_planid_med'],
+        ':ins_provider_med': data['ins_provider_med'],
+        ':ins_street_addr_med': data['ins_street_addr_med'],
+        ':ins_city_med': data['ins_city_med'],
+        ':ins_state_med': data['ins_state_med'],
+        ':ins_zipcode_med': data['ins_zipcode_med'],
+        ':ins_phone_med': data['ins_phone_med'],
+        ':ins_email_med': data['ins_email_med'],
         ':blood_pressure_systolic': data['blood_pressure_systolic'],
         ':blood_pressure_diastolic': data['blood_pressure_diastolic'],
+        ':dentist_name': data['dentist_name'],
+        ':dentist_email': data['dentist_phone'],
+        ':dentist_phone': data['dentist_phone'],
+        ':dental_condition': data['dental_condition'],
         ':updated_on': timestamp
     }
 
@@ -265,6 +298,26 @@ def update(event, context):
                          '#medication_freq_9= :medication_freq_9, '
                          '#blood_pressure_systolic= :blood_pressure_systolic, '
                          '#blood_pressure_diastolic= :blood_pressure_diastolic, '
+                         '#dental_condition= :dental_condition, '
+                         '#dentist_name= :dentist_name, '
+                         '#dentist_email= :dentist_email, '
+                         '#dentist_phone= :dentist_phone, '
+                         '#ins_planid_dental= :ins_planid_dental, '
+                         '#ins_provider_dental= :ins_provider_dental, '
+                         '#ins_street_addr_dental= :ins_street_addr_dental, '
+                         '#ins_city_dental= :ins_city_dental, '
+                         '#ins_state_dental= :ins_state_dental, '
+                         '#ins_zipcode_dental= :ins_zipcode_dental, '
+                         '#ins_phone_dental= :ins_phone_dental, '
+                         '#ins_email_dental= :ins_email_dental, '
+                         '#ins_planid_med= :ins_planid_med, '
+                         '#ins_provider_med= :ins_provider_med, '
+                         '#ins_street_addr_med= :ins_street_addr_med, '
+                         '#ins_city_med= :ins_city_med, '
+                         '#ins_state_med= :ins_state_med, '
+                         '#ins_zipcode_med= :ins_zipcode_med, '
+                         '#ins_phone_med= :ins_phone_med, '
+                         '#ins_email_med= :ins_email_med, '
                          '#updated_on= :updated_on ',
         ReturnValues='ALL_NEW',
     )
