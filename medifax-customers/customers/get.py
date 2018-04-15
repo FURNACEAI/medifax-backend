@@ -1,8 +1,3 @@
-# Local invoke workaround
-if __name__ == '__main__':
-    import sys
-    sys.path.append("/Users/bryan/Work/FURNACE/Projects/Medifax/src/medifax-lambda/medifax-customers")
-
 import os
 import json
 from libs import decimalencoder
@@ -10,7 +5,6 @@ import boto3
 from boto3.dynamodb.conditions import Key
 
 def get(event, context):
-    print(event['pathParameters']['id'])
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
     result = table.get_item(

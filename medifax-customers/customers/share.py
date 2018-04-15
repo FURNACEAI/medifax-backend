@@ -1,4 +1,7 @@
+import os
+import json
 import boto3
+from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
 
 def send_email(sender, recipient, subject, msgbody):
@@ -84,3 +87,49 @@ def send_email(sender, recipient, subject, msgbody):
         return True
         #print("Email sent! Message ID:"),
         #print(response['ResponseMetadata']['RequestId'])
+
+def share(event, context):
+    data = json.loads(event['body'])
+    subject = "%s Would Like to Share Their Medifax Records" % data['name']
+    recipient = data['email']
+    sender = 'Medifax <bryan@furnaceai.com>'
+    fullname = data['name']
+    userid = event['pathParameters']['id']
+    subject = "%s Wants to Share Their Medifax Records With You" % fullname
+    msgbody = """<h2>%s has requested to share their Medifax records with you.</h2>
+
+    <p>To access their records, please click <a href="http://dev-env.gsuvdcrfpg.us-east-1.elasticbeanstalk.com/medical/%s">here</a>.</p>
+
+    <p>If the above link is not clickable, copy and paste this URL into your browser's titlebar: http://dev-env.gsuvdcrfpg.us-east-1.elasticbeanstalk.com/medical/%s</p>
+    """ % (fullname, userid, userid)
+
+    # def send_email(sender, recipient, subject, msgbody):
+    msg = send_email(sender, recipient, subject, msgbody)
+    if msg:
+        response = {
+            "statusCode": 200,
+            "body": json.dumps({"message":msg})
+        }
+    else:
+        response = {
+            "statusCode": 200,
+            "body": json.dumps({"message":"Error"})
+        }
+    return response
+
+if __name__ == '__main__':
+    boto3.setup_default_session(profile_name='serverless')
+    os.environ["DYNAMODB_TABLE"] = 'medifax-backend-customers-dev'
+    payload = {
+        "pathParameters": {
+            "id": "c85cf638-3aa0-11e8-8bb4-5e566f9ab6c7"
+        },
+        "body": json.dumps({
+            "email": "contact@furnaceai.com",
+            "name": "Bryan Richard"
+        })
+    }
+    data = json.loads(json.dumps(payload))
+    print(data)
+    res = share(data, '')
+    print(res)

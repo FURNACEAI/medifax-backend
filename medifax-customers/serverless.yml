@@ -56,6 +56,22 @@ functions:
           method: get
           cors: true
 
+  share:
+    handler: customers/share.share
+    events:
+      - http:
+          path: customers/share/{id}
+          method: post
+          cors: true
+
+  onetimes3url:
+    handler: customers/onetimes3url.onetimes3url
+    events:
+      - http:
+          path: customers/onetimes3url
+          method: post
+          cors: true
+
   update:
     handler: customers/update.update
     events:

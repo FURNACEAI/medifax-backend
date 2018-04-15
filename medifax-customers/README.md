@@ -13,6 +13,10 @@ This service has a separate directory for all the todo operations. For each oper
 
 The idea behind the `todos` directory is that in case you want to create a service containing multiple resources e.g. users, notes, comments you could do so in the same service. While this is certainly possible you might consider creating a separate service for each resource. It depends on the use-case and your preference.
 
+## AWS Policy Configuration
+
+You must add SES policy access to the role mapped to the /share endpoint. On dev, it might look something like this: medifax-backend-customers-dev-us-east-1-lambdaRole
+
 ## Use-cases
 
 - API for a Web Application

@@ -13,7 +13,6 @@ def auth(event, context):
     data = json.loads(event['body'])
     dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
-
     result = table.scan(
         FilterExpression=Attr("access_code").eq(data['access_code'])
     )
@@ -21,14 +20,27 @@ def auth(event, context):
     ## Set the default response to failure and then test for success.
     response = {
         "statusCode": 200,
-        "body": json.dumps({"message": "Error", "messageDesc": "Can't locate that customer's records."})
+        "body": json.dumps({"message": "Error", "messageDesc": "Could not locate Customer record."})
     }
 
     if len(result['Items']) > 0: # Sanity check to see if the access_code was correct
-        if pbkdf2_sha256.verify(data['password'], result['Items'][0]['password']):
-            response = {
-                "statusCode": 200,
-                "body": json.dumps({"message": "Success", "messageDesc": "Log successful.", "id": "%s"})
-            } % result['Items'][0]['id']
+        response = {
+            "statusCode": 200,
+            "body": json.dumps({"message": "Success", "messageDesc": "Log successful.", "id": "%s" % result['Items'][0]['id']})
+        }
 
     return response
+
+if __name__ == '__main__':
+    ## Configure boto for local environment
+    boto3.setup_default_session(profile_name='serverless')
+    os.environ["DYNAMODB_TABLE"] = 'medifax-backend-customers-dev'
+    ac = "4310640963"
+    response = {
+        "body": json.dumps({
+		"access_code": ac
+	})
+    }
+    # testing_data = json.dumps({'body':})
+    data = json.loads(json.dumps(response))
+    print(auth(data, ''))

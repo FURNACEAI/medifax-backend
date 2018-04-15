@@ -63,6 +63,7 @@ def update(event, context):
         '#bmi': 'bmi',
         '#blood_pressure_systolic': 'blood_pressure_systolic',
         '#blood_pressure_diastolic': 'blood_pressure_diastolic',
+        '#blood_type': 'blood_type',
         '#current_problems_0': 'current_problems_0',
         '#current_problems_1': 'current_problems_1',
         '#current_problems_2': 'current_problems_2',
@@ -156,6 +157,7 @@ def update(event, context):
         ':lifestyle_history': data['lifestyle_history'],
         ':social_history': data['social_history'],
         ':bmi': data['bmi'],
+        ':blood_type': data['blood_type'],
         ':current_problems_0': data['current_problems_0'],
         ':current_problems_1': data['current_problems_1'],
         ':current_problems_2': data['current_problems_2'],
@@ -215,7 +217,7 @@ def update(event, context):
         ':blood_pressure_systolic': data['blood_pressure_systolic'],
         ':blood_pressure_diastolic': data['blood_pressure_diastolic'],
         ':dentist_name': data['dentist_name'],
-        ':dentist_email': data['dentist_phone'],
+        ':dentist_email': data['dentist_email'],
         ':dentist_phone': data['dentist_phone'],
         ':dental_condition': data['dental_condition'],
         ':updated_on': timestamp
@@ -243,6 +245,7 @@ def update(event, context):
                          '#height= :height, '
                          '#weight= :weight, '
                          '#heart_rate= :heart_rate, '
+                         '#blood_type= :blood_type, '
                          '#active= :active, '
                          '#status= :status, '
                          '#gender= :gender, '
