@@ -3,7 +3,7 @@ import json
 from libs import decimalencoder
 import boto3
 from boto3.dynamodb.conditions import Key
-from boto.s3.connection import S3Connection
+
 
 
 def get(event, context):
@@ -15,11 +15,11 @@ def get(event, context):
         }
     )
 
-    # Add a key for the images
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(name="medifax-images")
     result['Item']['images'] = {}
     IMG_TYPES = ['medical', 'dental']
+
 
     # Fetch the two types of images and append them to the JSON response
     for img in IMG_TYPES:
@@ -32,6 +32,7 @@ def get(event, context):
             FilesNotFound = False
         if FilesNotFound:
             pass
+            
     response = {
         "statusCode": 200,
         "body": json.dumps(result['Item'],
