@@ -28,11 +28,21 @@ def get(event, context):
         prefix = "%s/%s/" % (event['pathParameters']['id'], img)
         FilesNotFound = True
         for obj in bucket.objects.filter(Prefix=prefix):
-            result['Item']['images'][img].append('https://s3.amazonaws.com/{0}/{1}'.format(bucket.name, obj.key))
+            # We need a separate operation to fetch the metadata since the above returns an ObjectSummary
+            img_name = ''
+            img_date = ''
+            object = s3.Object(bucket.name, obj.key)
+            metadata = object.metadata
+            if 'imgname' in metadata:
+                img_name = metadata['imgname']
+            if 'imgdate' in metadata:
+                img_date = metadata['imgdate']
+
+            result['Item']['images'][img].append(['https://s3.amazonaws.com/{0}/{1}'.format(bucket.name, obj.key), img_name, img_date])
             FilesNotFound = False
         if FilesNotFound:
             pass
-            
+
     response = {
         "statusCode": 200,
         "body": json.dumps(result['Item'],
@@ -45,7 +55,7 @@ if __name__ == '__main__':
     os.environ["DYNAMODB_TABLE"] = 'medifax-backend-customers-dev'
     payload = {
         "pathParameters": {
-            "id": "c85cf638-3aa0-11e8-8bb4-5e566f9ab6c7"
+            "id": "3c247de2-45e7-11e8-8575-1635d7514c45"
         }
     }
     data = json.loads(json.dumps(payload))
