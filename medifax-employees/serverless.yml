@@ -6,6 +6,7 @@ provider:
   name: aws
   runtime: python2.7
   profile: serverless
+  stage: ${opt:stage, 'prod'}
   environment:
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
   iamRoleStatements:

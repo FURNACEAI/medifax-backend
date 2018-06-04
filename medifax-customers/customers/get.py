@@ -1,9 +1,15 @@
 import os
 import json
-from libs import decimalencoder
+import decimal
+# import decimalencoder
 import boto3
 from boto3.dynamodb.conditions import Key
 
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, decimal.Decimal):
+            return int(obj)
+        return super(DecimalEncoder, self).default(obj)
 
 
 def get(event, context):
@@ -46,7 +52,7 @@ def get(event, context):
     response = {
         "statusCode": 200,
         "body": json.dumps(result['Item'],
-                           cls=decimalencoder.DecimalEncoder)
+                           cls=DecimalEncoder)
     }
     return response
 

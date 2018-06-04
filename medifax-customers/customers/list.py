@@ -5,8 +5,15 @@ if __name__ == '__main__':
 
 import json
 import os
-from libs import decimalencoder
+import decimal
+# import decimalencoder
 import boto3
+
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, decimal.Decimal):
+            return int(obj)
+        return super(DecimalEncoder, self).default(obj)
 
 def list(event, context):
     dynamodb = boto3.resource('dynamodb')
@@ -17,7 +24,7 @@ def list(event, context):
     # create a response
     response = {
         "statusCode": 200,
-        "body": json.dumps(result['Items'], cls=decimalencoder.DecimalEncoder)
+        "body": json.dumps(result['Items'], cls=DecimalEncoder)
     }
 
     return response

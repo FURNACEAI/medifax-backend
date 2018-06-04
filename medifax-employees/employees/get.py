@@ -1,8 +1,15 @@
 import os
 import json
-from todos import decimalencoder
+import decimal
 import boto3
 from boto3.dynamodb.conditions import Key
+
+# This is a workaround for: http://bugs.python.org/issue16535
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, decimal.Decimal):
+            return int(obj)
+        return super(DecimalEncoder, self).default(obj)
 
 def get(event, context):
     dynamodb = boto3.resource('dynamodb')
@@ -16,7 +23,7 @@ def get(event, context):
     response = {
         "statusCode": 200,
         "body": json.dumps(result['Item'],
-                           cls=decimalencoder.DecimalEncoder)
+                           cls=DecimalEncoder)
     }
 
     return response
